@@ -28,8 +28,12 @@ func main() {
 	})
 
 	app.Cron().MustAdd("Check New Videos", "*/2 * * * *", func() {
-		helper.CheckExerciseVideos(app)
-		helper.CheckGameplayVideos(app)
+		if len(helper.ConfigEnv.ExerciseVideoPath) > 0 {
+			helper.CheckExerciseVideos(app)
+		}
+		if len(helper.ConfigEnv.GamePlayVideoPath) > 0 {
+			helper.CheckGameplayVideos(app)
+		}
 	})
 
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
