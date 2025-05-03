@@ -24,18 +24,18 @@ func exists(path string) (bool, error) {
 	return false, err
 }
 
-func readFolder(folderPath string, app *pocketbase.PocketBase, collection string) {
+func readFolder(folderPath string, app *pocketbase.PocketBase, collectionName string) {
 	items, _ := os.ReadDir(folderPath)
 	for _, item := range items {
 		itemAbsolutePath := path.Join(folderPath, item.Name())
 		log.Printf("Processing: %s", itemAbsolutePath)
 		if item.IsDir() {
-			readFolder(itemAbsolutePath, app, collection)
+			readFolder(itemAbsolutePath, app, collectionName)
 		} else {
 			// if item.Name().
 			// strings.HasSuffix(item.Name().,"")
 			if strings.HasSuffix(strings.ToLower(item.Name()), ".mp4") {
-				dbItem, _ := app.FindFirstRecordByFilter(collection, "file_source_path={:file_source_path}", dbx.Params{
+				dbItem, _ := app.FindFirstRecordByFilter(collectionName, "file_source_path={:file_source_path}", dbx.Params{
 					"file_source_path": itemAbsolutePath,
 				})
 				// if err != nil {
@@ -46,9 +46,9 @@ func readFolder(folderPath string, app *pocketbase.PocketBase, collection string
 					log.Printf("DB Record for %s found, skipping this item", itemAbsolutePath)
 					continue
 				}
-				collection, err := app.FindCollectionByNameOrId("camera_source")
+				collection, err := app.FindCollectionByNameOrId(collectionName)
 				if err != nil {
-					log.Printf("Error finding camera_source collection: %v", err)
+					log.Printf("Error finding %s collection: %v", collectionName, err)
 				}
 
 				record := core.NewRecord(collection)
