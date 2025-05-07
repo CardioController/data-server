@@ -1,3 +1,5 @@
 pb_data/
 .env
 *.tar.gz
+gp_vid/
+ex_vid/
