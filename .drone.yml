@@ -1,0 +1,27 @@
+kind: pipeline
+name: default
+
+steps:
+  - name: clone front end
+    image: drone/git
+    environment:
+      FE_REPO_URL:
+        from_secret: FE_REPO_URL
+    commands:
+      - git clone $FE_REPO_URL fe
+      - cd fe
+      - git log -1 master
+
+  - name: build docker image and push
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: DOCKER_USERNAME
+      password:
+        from_secret: DOCKER_PASSWORD
+      repo:
+        from_secret: DOCKER_REPO
+      registry:
+        from_secret: DOCKER_REGISTRY
+      tags:
+        - latest

@@ -46,7 +46,7 @@ func readFolder(folderPath string, app *pocketbase.PocketBase, collectionName st
 				// 	continue
 				// }
 				if dbItem != nil {
-					log.Printf("DB Record for %s found, skipping this item", itemAbsolutePath)
+					// log.Printf("DB Record for %s found, skipping this item", itemAbsolutePath)
 					continue
 				}
 				collection, err := app.FindCollectionByNameOrId(collectionName)
