@@ -3,3 +3,4 @@ pb_data/
 *.tar.gz
 gp_vid/
 ex_vid/
+*debug*bin*
