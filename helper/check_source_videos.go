@@ -57,6 +57,7 @@ func readFolder(folderPath string, app *pocketbase.PocketBase, collectionName st
 				record := core.NewRecord(collection)
 
 				record.Set("file_source_path", itemServePath)
+				record.Set("start", -1)
 				err = app.Save(record)
 				if err != nil {
 					log.Printf("Error saving new record for item[%s]: %v", itemAbsolutePath, err)
