@@ -38,6 +38,11 @@ func main() {
 
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
 		app.Settings().Batch.Enabled = true
+
+		se.Router.POST("/api/generate_exercise/{session_id}", func(e *core.RequestEvent) error {
+			return helper.GenerateExercise(e, app)
+		}).Bind(apis.RequireAuth())
+
 		// serves static files from the provided public dir (if exists)
 		se.Router.GET("/{path...}", apis.Static(os.DirFS("./pb_public"), false))
 
