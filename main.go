@@ -27,6 +27,10 @@ func main() {
 		Automigrate: isGoRun,
 	})
 
+	// app.Cron().MustAdd("Remove Output Files", "@daily", func() {
+
+	// })
+
 	app.Cron().MustAdd("Check New Videos", "*/2 * * * *", func() {
 		if len(helper.ConfigEnv.ExerciseVideoPath) > 0 {
 			helper.CheckExerciseVideos(app)
