@@ -77,7 +77,7 @@ func GenerateExercise(e *core.RequestEvent, app *pocketbase.PocketBase) error {
 	}
 
 	// randomly choose exercise
-	exercises, err := app.FindRecordsByFilter("exercises", "category~{:category}", "@random", EXERCISE_NUM, 0, dbx.Params{
+	exercises, err := app.FindRecordsByFilter("exercises", "categories~{:category}", "@random", EXERCISE_NUM, 0, dbx.Params{
 		"category": data.Category,
 	})
 
